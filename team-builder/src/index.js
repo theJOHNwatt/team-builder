@@ -1,12 +1,37 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, {useState} from 'react';
+import './App.css';
+import Member from './components/Member';
+import MemberForm from './components/MemberForm';
+import ReactDOM from "react-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function App() {
+  
+  const [members, setMembers] = useState([]);
+  
+  const addNewMember = member => {
+    const newMember = {
+      id: Date.now(),
+      name: member.name,
+      position: member.position,
+      email: member.email
+    }
+    setMembers([...members,newMember])
+  }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+
+
+  return (
+    <div className="App">
+      <h1>Add New Member</h1>
+      <MemberForm addNewMember={addNewMember} /> 
+      <h1>Team Members</h1>
+      <Member members={members} />
+    </div>
+  );
+}
+
+export default App;
+
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
